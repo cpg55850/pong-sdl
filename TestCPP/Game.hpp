@@ -28,6 +28,8 @@ private:
     
     // Window created by SDL
     SDL_Window* mWindow;
+    // Renderer for 2D drawing
+    SDL_Renderer* mRenderer;
     // Game should continue to run
     bool mIsRunning;
 };

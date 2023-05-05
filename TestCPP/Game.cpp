@@ -11,6 +11,7 @@
 
 Game::Game()
 :mWindow(nullptr)
+,mRenderer(nullptr)
 ,mIsRunning(true){}
 
 bool Game::Initialize(){
@@ -27,11 +28,20 @@ bool Game::Initialize(){
         SDL_Log("Failed to create window: %s", SDL_GetError());
         return false;
     }
+    
+    mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    
+    if (!mRenderer)
+    {
+        SDL_Log("Failed to create renderer: %s", SDL_GetError());
+        return false;
+    }
 
     return true;
 }
 
 void Game::Shutdown() {
+    SDL_DestroyRenderer(mRenderer);
     SDL_DestroyWindow(mWindow);
     SDL_Quit();
 }
@@ -67,5 +77,18 @@ void Game::UpdateGame(){
     return;
 }
 void Game::GenerateOutput(){
-    return;
+    // Set draw color to blue
+    SDL_SetRenderDrawColor(
+        mRenderer,
+        0,        // R
+        0,        // G
+        255,    // B
+        255        // A
+    );
+
+    // Clear back buffer
+    SDL_RenderClear(mRenderer);
+    
+    // Swap front buffer and back buffer
+    SDL_RenderPresent(mRenderer);
 }
