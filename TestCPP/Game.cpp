@@ -38,16 +38,30 @@ void Game::Shutdown() {
 
 void Game::RunLoop(){
     //Hack to get window to stay up
-    SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
-//    while(mIsRunning){
-//        ProcessInput();
-//        UpdateGame();
-//        GenerateOutput();
-//    }
+//    SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
+    while(mIsRunning){
+        ProcessInput();
+        UpdateGame();
+        GenerateOutput();
+    }
 }
 
 void Game::ProcessInput(){
-    return;
+    SDL_Event event;
+    while(SDL_PollEvent(&event)){
+        switch(event.type) {
+            case SDL_QUIT:
+                mIsRunning = false;
+                break;
+        }
+    }
+    
+    // Get state of keyboard
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    // If escape is pressed, also end loop
+    if (state[SDL_SCANCODE_ESCAPE]){
+        mIsRunning = false;
+    }
 }
 void Game::UpdateGame(){
     return;
