@@ -11,6 +11,14 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
+// Vector2 struct just stores x/y coordinates
+// (for now)
+struct Vector2
+{
+    float x;
+    float y;
+};
+
 class Game {
 public:
     Game();
@@ -32,6 +40,12 @@ private:
     SDL_Renderer* mRenderer;
     // Game should continue to run
     bool mIsRunning;
+    
+    // Pong specific
+    // Position of paddle
+    Vector2 mPaddlePos;
+    // Position of ball
+    Vector2 mBallPos;
 };
 
 #endif /* Game_hpp */
